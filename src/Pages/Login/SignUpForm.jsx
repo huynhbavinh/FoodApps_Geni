@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { Container, Row } from "react-bootstrap";
 import { Col } from 'reactstrap';
-
+import wallpaper from '../../Assets/images/SignUp-wallpaper.jpg'
 export default class SignUp extends Component {
     render() {
         return (
-            <Container fluid>
-                <Row lg={3}>
-                    <Col xs={7} back></Col>
-                    <Col >
+            <Container fluid style={{
+                backgroundImage: `url(${wallpaper})`,
+                height: '100vh',
+            }}>
+                <Row>
+                    <Col xs={7}></Col>
+                    <Col md="4" className="my-5 px-3 py-3 align-items-center bg-light bg-opacity-75 text-dark rounded shadow-lg">
                         <form>
                             <h3>Sign Up</h3>
 
