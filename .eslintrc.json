@@ -1,0 +1,8 @@
+{
+    "extends": ["react-app", "plugin:import/errors", "plugin:import/warnings"],
+    "rules": {
+        "array-bracket-spacing": ["warn", "never"],
+        "array-callback-return": "warn",
+        "camelcase": ["warn", {"properties": "never"}]
+    }
+}
