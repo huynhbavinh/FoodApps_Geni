@@ -4,32 +4,36 @@ import Home from './Pages/Home/HomePage.jsx'
 import AppLayout from './Pages/Layout/AppLayout.jsx';
 import Login from './Pages/Login/LoginForm.jsx';
 import SignUp from './Pages/Login/SignUpForm.jsx';
-import CartListDetails from './Pages/Cart/CartListDetails.jsx'
-import CheckOut from './Pages/CheckOut/index.jsx'
-import FoodDetails from './Pages/Products/FoodDetails.jsx'
-import History from './Pages/History/index.jsx'
-import AllFoods from './Pages/Products/AllFood.jsx';
-import Contact from './Pages/Contact/Index.jsx';
-
+import ProtectedRoute from './Pages/Layout/ProtectedRoute.jsx'
+import UserProfile from './Pages/Users/UserProfile.jsx';
+import AuthProvider from './Context/AuthContext.jsx'
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<SignUp/>}/>
-        <Route element ={<AppLayout/>}>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/cart' element={<CartListDetails/>}/>
-          <Route path='/checkout' element={<CheckOut/>}/>
-          <Route path='/fooddetails' element={<FoodDetails/>}/>
-          <Route path='/history' element={<History/>}/>
-          <Route path='/foods' element={<AllFoods/>}/>
-          <Route path='/contact' element={<Contact/>}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={
+            <ProtectedRoute>
+              <AppLayout/>
+            </ProtectedRoute>
+              }
+              > 
+            <Route index element={<Navigate replace to='Home'/>}/>
+            <Route path='/profile' element={<UserProfile/>}/>
+          </Route>
+        <Route index element={<Navigate replace to='Home'/>}/>
+        <Route path='/home' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/menu' element={<SignUp/>}/>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
+/*
+vao page -> Home, Menu, , Contact register, Login (offline) - Cart, Add to Cart trong menu -> Bat phai login
+Login -> Profile, Cart
+*/
 export default App;
