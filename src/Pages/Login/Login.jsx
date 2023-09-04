@@ -9,7 +9,7 @@ function App() {
             <MDBRow>
 
                 <MDBCol col='10' md='6'>
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid" alt="Sample image" />
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid" alt="Sample image" />
                 </MDBCol>
 
                 <MDBCol col='4' md='6'>
@@ -36,8 +36,8 @@ function App() {
                         <p className="text-center fw-bold mx-3 mb-0">Or</p>
                     </div>
 
-                    <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg" />
-                    <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg" />
+                    <MDBInput wrapperclassName='mb-4' label='Email address' id='formControlLg' type='email' size="lg" />
+                    <MDBInput wrapperclassName='mb-4' label='Password' id='formControlLg' type='password' size="lg" />
 
                     <div className="d-flex justify-content-between mb-4">
                         <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />

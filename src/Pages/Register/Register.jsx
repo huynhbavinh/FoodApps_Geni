@@ -44,16 +44,16 @@ function App() {
 
                             <MDBRow>
                                 <MDBCol col='6'>
-                                    <MDBInput wrapperClass='mb-4' label='First name' id='form1' type='text' />
+                                    <MDBInput wrapperclassName='mb-4' label='First name' id='form1' type='text' />
                                 </MDBCol>
 
                                 <MDBCol col='6'>
-                                    <MDBInput wrapperClass='mb-4' label='Last name' id='form2' type='text' />
+                                    <MDBInput wrapperclassName='mb-4' label='Last name' id='form2' type='text' />
                                 </MDBCol>
                             </MDBRow>
 
-                            <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email' />
-                            <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password' />
+                            <MDBInput wrapperclassName='mb-4' label='Email' id='form3' type='email' />
+                            <MDBInput wrapperclassName='mb-4' label='Password' id='form4' type='password' />
 
                             <div className='d-flex justify-content-center mb-4'>
                                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
