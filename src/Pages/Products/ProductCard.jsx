@@ -6,22 +6,22 @@ import { Link } from "react-router-dom";
 
 import axios  from "axios";
 const ProductCard = (props) => {
-  const {id, name, price, picture} = props.item;
+  const {id, name, price, photos} = props.item;
   const items =JSON.parse(window.localStorage.getItem("user"));
-  const config = {
-    headers: { Authorization: `Bearer ${items.accessToken}` }
-  };
-  const addToCart = () => {
-    const newItem={idOfCus:items.id,
-    idOfPro:id,
-    quantity:1}
-    axios.post("http://localhost:8080/api/cart/addCart",newItem, config);
-  };
+  // const config = {
+  //   headers: { Authorization: `Bearer ${items.accessToken}` }
+  // };
+  // const addToCart = () => {
+  //   const newItem={idOfCus:items.id,
+  //   idOfPro:id,
+  //   quantity:1}
+  //   axios.post("http://localhost:8080/api/cart/addCart",newItem, config);
+  // };
 
   return (
     <div className="product__item">
       <div className="product__img">
-        <img src={picture} alt="product-img" className="w-50" />
+        <img src={photos} alt="product-img" className="w-50" />
       </div>
 
       <div className="product__content">
@@ -30,7 +30,7 @@ const ProductCard = (props) => {
         </h5>
         <div className=" d-flex align-items-center justify-content-between ">
           <span className="product__price">${price}</span>
-          <button className="addTOCart__btn" onClick={addToCart}>
+          <button className="addTOCart__btn" onClick={""}>
             Add to Cart
           </button>
         </div>

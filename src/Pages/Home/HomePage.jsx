@@ -4,7 +4,7 @@ import axios from "axios";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 
 import heroImg from "../../Assets/images/hero.png"
-import "../../styles/hero-section.css"
+import "../../styles/hero-section.css";
 
 import { Link } from "react-router-dom";
 
@@ -19,10 +19,9 @@ import foodCategoryImg02 from "../../Assets/images/pizza.png";
 import foodCategoryImg03 from "../../Assets/images/bread.png";
 
 import ProductCard from "../../Pages/Products/ProductCard.jsx";
-
 import whyImg from "../../Assets/images/location.png";
-
 import networkImg from "../../Assets/images/network.png";
+import { useAuth } from "../../Context/AuthContext.jsx";
 
 const featureData = [
     {
@@ -44,55 +43,35 @@ const featureData = [
 ];
 
 const HomePage = () => {
+    const [category, setCategory] = useState("All");
     const [foods, setFoods] = useState([]);
-    const [category, setCategory] = useState("ALL");
     const [allProducts, setAllProducts] = useState(foods);
-    // useEffect(() => {
-    //     axios.get("http://localhost:8080/auth/showFood2").then((data) => {
-    //         setFoods(data.data);
-    //     })
-    // }, []
-    // ); // TODO
-
+    const {isAuthenticated} = useAuth()
     useEffect(() => {
-        if (category === "ALL") {
+        axios.get("http://localhost:8080/auth/showFood").then((data) => {
+            setFoods(data.data);
+        })
+        if (category === "All") {
             setAllProducts(foods);
         }
 
         if (category === "Food") {
             const filteredProducts = foods.filter(
-                (item) => item.type === "món ăn"
+                (item) => item.category.name === "Food"
             );
 
             setAllProducts(filteredProducts);
         }
-
-        if (category === "Milk Tea") {
+        if (category === "Drink") {
             const filteredProducts = foods.filter(
-                (item) => item.type === "trà sữa"
+                (item) => item.category.name === "Drink"
             );
 
             setAllProducts(filteredProducts);
         }
-
-        if (category === "Fruit Tea") {
+        if (category === "Others") {
             const filteredProducts = foods.filter(
-                (item) => item.type === "Trà trái cây"
-            );
-
-            setAllProducts(filteredProducts);
-        }
-
-        if (category === "Snacks") {
-            const filteredProducts = foods.filter(
-                (item) => item.type === "Đồ ăn vặt"
-            );
-
-            setAllProducts(filteredProducts);
-        }
-        if (category === "Soda") {
-            const filteredProducts = foods.filter(
-                (item) => item.type === "Soda"
+                (item) => item.category.name === "Others"
             );
 
             setAllProducts(filteredProducts);
@@ -118,9 +97,12 @@ const HomePage = () => {
                                 </p>
 
                                 <div className="hero__btns d-flex align-items-center gap-5 mt-4">
-                                    <button className="order__btn d-flex align-items-center justify-content-between">
-                                        Order now <i class="ri-arrow-right-s-line"></i>
-                                    </button>
+                                    <Link to="/cart">
+                                        <button className="order__btn d-flex align-items-center justify-content-between">
+                                            Order now <i class="ri-arrow-right-s-line"></i>
+                                        </button>
+                                    </Link>
+                                    
 
                                     <button className="all__foods-btn">
                                         <Link to="/foods">See all foods</Link>
@@ -204,9 +186,9 @@ const HomePage = () => {
                         <Col lg="12">
                             <div className="food__category d-flex align-items-center justify-content-center gap-4">
                                 <button
-                                    className={`all__btn  ${category === "ALL" ? "foodBtnActive" : ""
+                                    className={`all__btn  ${category === "All" ? "foodBtnActive" : ""
                                         } `}
-                                    onClick={() => setCategory("ALL")}
+                                    onClick={() => setCategory("All")}
                                 >
                                     All
                                 </button>
@@ -220,41 +202,24 @@ const HomePage = () => {
                                 </button>
 
                                 <button
-                                    className={`d-flex align-items-center gap-2 ${category === "Milk Tea" ? "foodBtnActive" : ""
+                                    className={`d-flex align-items-center gap-2 ${category === "Drink" ? "foodBtnActive" : ""
                                         } `}
-                                    onClick={() => setCategory("Milk Tea")}
+                                    onClick={() => setCategory("Drink")}
                                 >
                                     <img src={foodCategoryImg02} alt="" />
-                                    Milk Tea
+                                    Drink
                                 </button>
 
                                 <button
-                                    className={`d-flex align-items-center gap-2 ${category === "Fruit Tea" ? "foodBtnActive" : ""
+                                    className={`d-flex align-items-center gap-2 ${category === "Others" ? "foodBtnActive" : ""
                                         } `}
-                                    onClick={() => setCategory("Fruit Tea")}
+                                    onClick={() => setCategory("Others")}
                                 >
                                     <img src={foodCategoryImg03} alt="" />
-                                    Fruit Tea
-                                </button>
-                                <button
-                                    className={`d-flex align-items-center gap-2 ${category === "Snacks" ? "foodBtnActive" : ""
-                                        } `}
-                                    onClick={() => setCategory("Snacks")}
-                                >
-                                    <img src={foodCategoryImg03} alt="" />
-                                    Snacks
-                                </button>
-                                <button
-                                    className={`d-flex align-items-center gap-2 ${category === "Soda" ? "foodBtnActive" : ""
-                                        } `}
-                                    onClick={() => setCategory("Soda")}
-                                >
-                                    <img src={foodCategoryImg03} alt="" />
-                                    Soda
+                                    Others
                                 </button>
                             </div>
                         </Col>
-
                         {allProducts.map((item) => (
                             <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
                                 <ProductCard item={item} />

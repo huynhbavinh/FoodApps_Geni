@@ -7,7 +7,12 @@ const reducer = (state, action) => {
     const actionType = action.type;
     let result;
     if (actionType === 'login') {
-        result = {...state, isAuthenticated: true, user: action.payload.user}
+        // todo: change password to token
+        const userInfo = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : false
+        result = {...state,
+            isAuthenticated: userInfo ? true : false,
+            user: userInfo ? userInfo : action.payload.user
+        }
     }
 
     if (actionType === 'logout') {
@@ -26,31 +31,42 @@ const initialState = {
 
 const AuthProvider  = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    const {user, isAuthenticated} = state;
+    let {user, isAuthenticated, error} = state;
+
     async function login (userName, password) {
         try {
             const userLoginInfo = {
                 userName,
                 password
             };
-            const loginInfo = await axios('http://localhost:8080/auth/signin', userLoginInfo)
+            const loginInfo = await axios.post('http://localhost:8080/auth/signin', userLoginInfo)
             dispatch({type: 'login', payload: {user: loginInfo}})
+            localStorage.setItem('user', JSON.stringify(loginInfo))
+
+            return {
+                isAdmin: loginInfo.data.roles[0] === 'ADMIN'
+            }
         } catch (error) {
-            console.log('Do something with the error')
+            dispatch({type: 'reject'})
         }
     }
     function logout () {
-        console.log('logout')
+        dispatch({type: 'logout'});
+        localStorage.clear()
+        
     }
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout, error}}>
             {children}
         </AuthContext.Provider>
+        
     )
 }
 
 const useAuth = () => {
     const context = useContext(AuthContext);
+    console.log(context)
     return context;
 }
+
 export {useAuth, AuthProvider}

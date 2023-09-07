@@ -1,18 +1,22 @@
-import React, { Component, useState, useNavigate, useEffect } from 'react'
+import React, { Component, useState, useEffect } from 'react'
+import {useNavigate} from 'react-router-dom';
 import { Container, Row } from "react-bootstrap";
 import { Col } from 'reactstrap';
 import wallpaper from '../../Assets/images/SignUp-wallpaper.jpg'
 import { useAuth } from '../../Context/AuthContext.jsx';
+import Alert from '../../Components/popup/alert.jsx';
 function Login () {
     const navigate = useNavigate()
     const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('')
-    const {login, isAuthenticated} = useAuth();
+    const [password, setPassword] = useState('');
+    const {login, isAuthenticated, user, error } = useAuth();
 
     useEffect(() => {
-        if(isAuthenticated) {
+        if (isAuthenticated && (user && user.data.roles[0] === 'ADMIN')){
+            navigate('/dashboard')
+        } else if (isAuthenticated || localStorage.getItem('user')) {
             navigate('/home')
-        }
+        } 
     },
     [isAuthenticated, navigate]);
 
@@ -20,6 +24,7 @@ function Login () {
         e.preventDefault();
         if(userName && password) {
             login(userName, password)
+            
         }
     }
     return (
@@ -31,8 +36,7 @@ function Login () {
                 <Col className="d-flex flex-fill justify-content-center p-5 my-5 bg-light bg-opacity-75 text-dark rounded shadow-lg">
                     <form style={{width: '25%'}} onSubmit={handleSubmit}>
                         <h3>Sign In</h3>
-
-                        <div className="mb-3">
+                        <div className="mb-3">  
                             <label>User name</label>
                             <input
                                 type="text"
@@ -53,19 +57,9 @@ function Login () {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-
-                        <div className="mb-3">
-                            <div className="custom-control custom-checkbox">
-                                <input
-                                    type="checkbox"
-                                    className="custom-control-input"
-                                    id="customCheck1"
-                                />
-                                <label className="custom-control-label" htmlFor="customCheck1"> 
-                                    Remember me
-                                </label>
-                            </div>
-                        </div>
+                        {
+                            error && <p style={{color: "red" }}>Wrong username or password</p>
+                        }
 
                         <div className="d-grid">
                             <button type="submit" className="btn btn-primary">
@@ -73,7 +67,7 @@ function Login () {
                             </button>
                         </div>
                         <p className="forgot-password text-right">
-                            Forgot <a href="#">password?</a>
+                            Do not have an account, <a href="/signup">Register</a> ?
                         </p>
                     </form>
                 </Col>

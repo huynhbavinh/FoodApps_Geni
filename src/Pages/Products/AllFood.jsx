@@ -11,32 +11,32 @@ const AllFoods = () => {
     const [foods, setFoods] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [sortOption, setSortOption] = useState("Default");
-    // useEffect(() => {
-    //     axios.get("http://localhost:8080/auth/showFood2").then((data) => {
-    //         setFoods(data.data);
-    //     })
-    // }, []
-    // );
-    // useEffect(()=>{
-    //   if(sortOption=="Default"){
-    //     setFoods(foods);
-    //     console.log(foods);
-    //   }
-    //   if(sortOption=="A-Z"){
-    //     setFoods(foods.sort((a, b) =>(a, b) =>
-    //     a.name > b.name ? 1 : -1));
-    //     console.log(foods);
-    //   }
-    //   if(sortOption=="Z-A"){
-    //     setFoods(foods.sort((a, b) => a.name > b.name ? -1 : 1));
-    //   }
-    //   if(sortOption=="High"){
-    //     setFoods(foods.sort((a, b) => a.price-b.price));
-    //   }
-    //   if(sortOption=="Low"){
-    //     setFoods(foods.sort((a, b) => b.price-a.price));
-    //   }
-    // })
+    useEffect(() => {
+        axios.get("http://localhost:8080/auth/showFood").then((data) => {
+            setFoods(data.data);
+        })
+    }, []
+    );
+    useEffect(()=>{
+      if(sortOption=="Default"){
+        setFoods(foods);
+        console.log(foods);
+      }
+       if(sortOption=="A-Z"){
+         setFoods(foods.sort((a, b) =>(a, b) =>
+        a.name > b.name ? 1 : -1));
+       console.log(foods);
+       }
+      if(sortOption=="Z-A"){
+        setFoods(foods.sort((a, b) => a.name > b.name ? -1 : 1));
+      }
+      if(sortOption=="High"){
+        setFoods(foods.sort((a, b) => a.price-b.price));
+      }
+      if(sortOption=="Low"){
+        setFoods(foods.sort((a, b) => b.price-a.price));
+      }
+    })
     const searchedProduct = foods.filter((item) => {
         if (searchTerm.value === "") {
             return item;

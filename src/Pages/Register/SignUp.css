@@ -1,0 +1,27 @@
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconUpload {
+    cursor: pointer;
+}
+input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid gray;  
+}
+button {
+width: 150px;
+padding: 10px;
+border: none;
+background-color: teal;
+color: white;
+font-weight: bold;
+cursor: pointer;
+margin-top: 10px;
+}
+

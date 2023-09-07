@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { TrustedTypeConfig } from "trusted-types";
-
-function ProtectedRoute ({children}) {
+import { useAuth } from "../../Context/AuthContext.jsx";
+export function ProtectedRoute ({children}) {
     const navigate = useNavigate()
-    const fakeUserContext = {isAuthenticated: true}
-    const {isAuthenticated} =  fakeUserContext;
+    // const fakeUserContext = {isAuthenticated: true}
+    const {isAuthenticated, user} =  useAuth()
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login')
@@ -17,4 +17,18 @@ function ProtectedRoute ({children}) {
     }
 }
 
-export default ProtectedRoute;
+export function AdminProtectedRoute ({children}) {
+    const navigate = useNavigate()
+    // const fakeUserContext = {isAuthenticated: true}
+    const {isAuthenticated, user} =  useAuth()
+    //
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login')
+        }
+    }, [isAuthenticated, navigate])
+
+    if (user && user.data.roles[0] === 'ADMIN') {
+        return children;
+    }
+}
