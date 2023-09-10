@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../Context/AuthContext.jsx";
+import { useCart } from "../../Context/CartContext.jsx";
 
 const ListProduct = () => {
-  const [totalMoney, setTotalMoney] = useState(0);
-  const [carts, setCart] = useState(0);
   const { user } = useAuth()
-
+  const {totalMoney, setTotalMoney, carts, setCart} = useCart()
   useEffect(() => {
     if (user) {
       let total = 0;
@@ -26,7 +25,7 @@ const ListProduct = () => {
       }
       fetch();
     }
-  }, [])
+  }, [user])
   return (
     <div className="list">
       <div className="listContainer" >
