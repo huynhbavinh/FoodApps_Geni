@@ -9,7 +9,7 @@ import { useCart } from "../../Context/CartContext.jsx";
 
 const ListProduct = () => {
   const { user } = useAuth()
-  const {totalMoney, setTotalMoney, carts, setCart} = useCart()
+  const {totalMoney, setTotalMoney, carts, setCart, setReRender} = useCart()
   useEffect(() => {
     if (user) {
       let total = 0;
@@ -22,10 +22,11 @@ const ListProduct = () => {
           total += parseInt(i.quantity) * parseInt(i.food.price);
         })
         setTotalMoney(total);
+        setReRender(reRender => !reRender);
       }
       fetch();
     }
-  }, [user])
+  }, [user, totalMoney])
   return (
     <div className="list">
       <div className="listContainer" >

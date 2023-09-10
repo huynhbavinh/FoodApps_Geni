@@ -18,35 +18,39 @@ const AllFoods = () => {
     const [foods, setFoods] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    let fullFood;
     useEffect(() => {
         axios.get("http://localhost:8080/auth/showFood").then((data) => {
             setFoods(data.data);
+            localStorage.setItem('foodList', JSON.stringify(data.data))
         })
     }, [])
 
     const handleChangeCategory = category => {
         let filteredProducts;
+        const foodData = localStorage.getItem('foodList');
+        const jsonFoodData = JSON.parse(foodData)
         switch (category) {
             case 'All':
-                setFoods(foods);
+                setFoods(jsonFoodData);
                 setSelectedCategory('All')
                 break;
             case 'Food':
-                filteredProducts = foods.filter(
+                filteredProducts = jsonFoodData.filter(
                     (item) => item.category?.name === "Food"
                 );
                 setFoods(filteredProducts);
                 setSelectedCategory('Food')
                 break;
             case 'Drink':
-                filteredProducts = foods.filter(
+                filteredProducts = jsonFoodData.filter(
                     (item) => item.category?.name === "Drink"
                 );
                 setFoods(filteredProducts);
                 setSelectedCategory('Drink')
                 break;
             case 'Others':
-                filteredProducts = foods.filter(
+                filteredProducts = jsonFoodData.filter(
                     (item) => item.category?.name === "Others"
                 );
                 setFoods(filteredProducts);

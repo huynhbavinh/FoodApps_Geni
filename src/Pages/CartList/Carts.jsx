@@ -22,7 +22,6 @@ const Products = ({items}) => {
         items.forEach(i => {
           if (i.food.id == id) i.quantity += quantity 
         })
-        setReRender(reRender => !reRender);
       })
     };
     fetch()
