@@ -18,6 +18,7 @@ import RankList from './Pages/Rank/RankList.jsx';
 import AddProduct from './Pages/ProductsList/AddProduct.jsx';
 import SingleProduct from './Pages/ProductsList/SingleProduct.jsx';
 import Single from './Pages/single/Single.jsx';
+import CheckOutPages from './Pages/CheckOut/CheckOut.jsx';
 import { userInputs } from "./Components/structure/formSource.js"
 import { productInputs } from "./Components/structure/formSource.js"
 
@@ -44,6 +45,7 @@ function App() {
             <Route path='/foods' element={<AllFood />} />
             <Route path='/contact' element={<Contact />} />
             <Route path="users/:id" element={<Single />} />
+            <Route path="/checkout" element={<CheckOutPages />} />
           </Route>
           // admin
           <Route element={

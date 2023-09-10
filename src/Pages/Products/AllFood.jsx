@@ -21,9 +21,7 @@ const AllFoods = () => {
 
     const [category, setCategory] = useState("All");
 
-
     useEffect(() => {
-        console.log(category)
         if (foods.length === 0) {
             axios.get("http://localhost:8080/auth/showFood").then((data) => {
                 setFoods(data.data);

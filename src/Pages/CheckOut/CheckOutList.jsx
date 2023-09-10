@@ -7,23 +7,10 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Context/AuthContext.jsx";
 const Products = ({items}) => {
   const { user } = useAuth()
+  const [flag, setFlag] = useState(0);
 
   const handleChangeQuantity = (id, quantity) => {
-    const fetch = async () => {
-      const newItem = {
-        idOfCus: user.data.id,
-        idOfPro: id,
-        quantity: quantity
-      }
-      await axios.post("http://localhost:8080/api/cart/addCart", newItem, {
-        'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
-      }).then(()=> {
-        items.forEach(i => {
-          if (i.food.id == id) i.quantity += quantity 
-        })
-      })
-    };
-    fetch()
+    
   };
   const actionColumn = [
     {
@@ -54,6 +41,7 @@ const Products = ({items}) => {
         columns={cartColumns.concat(actionColumn)}
         pageSize={6}
         rowsPerPageOptions={[6]}
+        flag={flag}
       />
     </div>
   );
