@@ -2,63 +2,57 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "../../styles/history.css";
+import axios from "axios";
+import { useAuth } from "../../Context/AuthContext.jsx";
+import PopupHistoryDetails from "./PopupHistory.jsx";
 
 const History = () => {
-    useEffect(()=> {
-        
-    },[])
-    const history = [
-        {
-            id: "01",
-            time: "08/06/2023",
-            total_price: 24.0
-        },
+    const { user } = useAuth()
 
-        {
-            id: "02",
-            time: "09/06/2023",
-            total_price: 115.0
-        },
-        {
-            id: "03",
-            time: "10/06/2023",
-            total_price: 50.0
-        },
-        {
-            id: "04",
-            time: "11/06/2023",
-            total_price: 17.0
-        }];
+    const [order, setOrder] = useState([]);
+    const [show, setShow] = useState(false);
+    const [target, setTarget] = useState({});
 
-
+    useEffect(() => {
+        const fetch = async () => {
+            const data = (await axios.get(`http://localhost:8080/api/history/showOrders?UserID=${user.data.id}`, {
+                'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
+            })).data
+            setOrder(data)
+        }
+        fetch();
+    }, [])
 
     return (
         <Container>
             <div className="history-page">
                 <h2>History</h2>
 
-                <h4>You have {history.length} orders</h4>
+                <h4>You have {order.length} orders</h4>
 
                 <table>
                     <thead>
                         <tr>
                             <th>Payment ID</th>
                             <th>Date of Purchased</th>
-                            <th>total</th>
+                            <th>Payment</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            history.map(items => (
-                                <tr key={items._id}>
-                                    <td>{items.id}</td>
-                                    <td>{items.time}</td>
-                                    <td>{items.total_price} $</td>
-                                    <td><Link to="/Checkout"> View </Link></td>
+                            order.map(items => (
+                                <tr key={items.id}>
+                                    <td>{items.paymentID}</td>
+                                    <td>{items.orderDate.replaceAll('T',' ').split('+')[0]}</td>
+                                    <td>{items.money} $</td>
+                                    <td>{items.status}</td>
+                                    <td style={{cursor: 'pointer'}} onClick={()=> {setTarget(items.orderID); setShow(true)}}>View</td>
                                 </tr>
                             ))
                         }
+                        {show && <PopupHistoryDetails show={show} setShow={setShow} id={target} />}
                     </tbody>
                 </table>
             </div>

@@ -23,7 +23,6 @@ const ProductCard = (props) => {
     axios.post("http://localhost:8080/api/cart/addCart", newItem, {
       'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
     }).then(() => {
-      setShow(true)
       if (!localStorage.getItem('cart')) {
         localStorage.setItem('cart', '0')
       } else {
@@ -31,6 +30,7 @@ const ProductCard = (props) => {
         localStorage.setItem('cart', numb.toString())
         setTotalCart(numb)
       }
+      setShow(true)
     });
   };
 

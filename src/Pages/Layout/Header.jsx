@@ -51,6 +51,7 @@ const Header = () => {
         fetch();
     } 
     }, [])
+
 //useEffect(() => {
 // window.addEventListener("scroll", () => {
 //     if (

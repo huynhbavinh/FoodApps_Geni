@@ -1,11 +1,14 @@
+import axios from 'axios';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext.jsx';
 
 function FormCheckOut({ items }) {
+    const { user } = useAuth();
     const navigate = useNavigate();
     let total = 0;
     let rank;
@@ -32,7 +35,25 @@ function FormCheckOut({ items }) {
             event.preventDefault();
             event.stopPropagation();
 
-            navigate('/history')
+            const fetch = async () => {
+                const transformItem = items.map(i => ({
+                    id: i.id,
+                    ...i.food,
+                }))
+                transformItem.forEach(i=> {
+                    delete i['hibernateLazyInitializer'];
+                })
+                const order = {
+                    "listItemsOr": [...transformItem],
+                    "IdOfUser": user.data.id
+                }
+                await axios.post("http://localhost:8080/api/order/order", order, {
+                    'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
+                }).then(() => {
+                    navigate('/history')
+                })
+            }
+            fetch();
         }
     };
 
