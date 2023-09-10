@@ -22,6 +22,7 @@ import CheckOutList from './Pages/CheckOut/CheckOutList.jsx';
 import { userInputs } from "./Components/structure/formSource.js"
 import { productInputs } from "./Components/structure/formSource.js"
 import { CartProvider } from './Context/CartContext.jsx';
+import History from './Pages/History/index.jsx'
 function App() {
   return (
     <AuthProvider>
@@ -47,6 +48,7 @@ function App() {
             <Route path='/contact' element={<Contact />} />
             <Route path="users/:id" element={<Single />} />
             <Route path="/checkout" element={<CheckOutList />} />
+            <Route path="/history" element={<History />} />
           </Route>
           // admin
           <Route element={

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import "../../styles/history.css";
 
-const History = (props) => {
+const History = () => {
+    useEffect(()=> {
+        
+    },[])
     const history = [
         {
             id: "01",

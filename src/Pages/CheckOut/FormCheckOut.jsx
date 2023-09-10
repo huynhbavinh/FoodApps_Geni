@@ -2,10 +2,11 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
+import { useNavigate } from 'react-router-dom';
 
 function FormCheckOut({ items }) {
+    const navigate = useNavigate();
     let total = 0;
     let rank;
     let discountPercent;
@@ -28,9 +29,10 @@ function FormCheckOut({ items }) {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            console.log('else')
             event.preventDefault();
             event.stopPropagation();
+
+            navigate('/history')
         }
     };
 
