@@ -17,56 +17,55 @@ const AllFoods = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [foods, setFoods] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const [sortOption, setSortOption] = useState("");
-
-    const [category, setCategory] = useState("All");
-
+    const [selectedCategory, setSelectedCategory] = useState('All');
     useEffect(() => {
-        if (foods.length === 0) {
-            axios.get("http://localhost:8080/auth/showFood").then((data) => {
-                setFoods(data.data);
-                if (category === "All") {
-                    setFoods(data.data);
-                }
-            })
-            if (category === "All") {
+        axios.get("http://localhost:8080/auth/showFood").then((data) => {
+            setFoods(data.data);
+        })
+    }, [])
+
+    const handleChangeCategory = category => {
+        let filteredProducts;
+        switch (category) {
+            case 'All':
                 setFoods(foods);
-            }
-    
-            if (category === "Food") {
-                const filteredProducts = foods.filter(
+                setSelectedCategory('All')
+                break;
+            case 'Food':
+                filteredProducts = foods.filter(
                     (item) => item.category?.name === "Food"
                 );
-    
                 setFoods(filteredProducts);
-            }
+                setSelectedCategory('Food')
+                break;
+            case 'Drink':
+                filteredProducts = foods.filter(
+                    (item) => item.category?.name === "Drink"
+                );
+                setFoods(filteredProducts);
+                setSelectedCategory('Drink')
+                break;
+            case 'Others':
+                filteredProducts = foods.filter(
+                    (item) => item.category?.name === "Others"
+                );
+                setFoods(filteredProducts);
+                setSelectedCategory('Others')
+                break;
+            default:
+                console.log('Unknown category');
         }
-        if (category === "Drink") {
-            const filteredProducts = foods.filter(
-                (item) => item.category?.name === "Drink"
-            );
+    }
 
-            setFoods(filteredProducts);
-        }
-        if (category === "Others") {
-            const filteredProducts = foods.filter(
-                (item) => item.category?.name === "Others"
-            );
-
-            setFoods(filteredProducts);
-        }
-    }, [category]);
-
-    useEffect(() => {
-        if (sortOption == "HIGH") {
+    const handleSortOptionChange = (sortOption) => {
+        if (sortOption === "HIGH") {
             setFoods(foods.sort((a, b) => a.price - b.price));
-        }
-        if (sortOption == "LOW") {
+        } else if (sortOption === "LOW") {
             setFoods(foods.sort((a, b) => b.price - a.price));
         } else {
             setFoods(foods);
         }
-    }, [sortOption])
+    }
 
     const searchedProduct = foods.filter((item) => {
         if (searchTerm.value === "") {
@@ -97,34 +96,34 @@ const AllFoods = () => {
             <Col lg="12">
                 <div className="food__category d-flex align-items-center justify-content-center gap-4">
                     <button
-                        className={`all__btn  ${category === "All" ? "foodBtnActive" : ""
+                        className={`all__btn  ${selectedCategory === "All" ? "foodBtnActive" : ""
                             } `}
-                        onClick={() => setCategory("All")}
+                        onClick={() => handleChangeCategory("All")}
                     >
                         All
                     </button>
                     <button
-                        className={`d-flex align-items-center gap-2 ${category === "Food" ? "foodBtnActive" : ""
+                        className={`d-flex align-items-center gap-2 ${selectedCategory === "Food" ? "foodBtnActive" : ""
                             } `}
-                        onClick={() => setCategory("Food")}
+                        onClick={() => handleChangeCategory("Food")}
                     >
                         <img src={foodCategoryImg01} alt="" />
                         Food
                     </button>
 
                     <button
-                        className={`d-flex align-items-center gap-2 ${category === "Drink" ? "foodBtnActive" : ""
+                        className={`d-flex align-items-center gap-2 ${selectedCategory === "Drink" ? "foodBtnActive" : ""
                             } `}
-                        onClick={() => setCategory("Drink")}
+                        onClick={() => handleChangeCategory("Drink")}
                     >
                         <img src={foodCategoryImg02} alt="" />
                         Drink
                     </button>
 
                     <button
-                        className={`d-flex align-items-center gap-2 ${category === "Others" ? "foodBtnActive" : ""
+                        className={`d-flex align-items-center gap-2 ${selectedCategory === "Others" ? "foodBtnActive" : ""
                             } `}
-                        onClick={() => setCategory("Others")}
+                        onClick={() => handleChangeCategory("Others")}
                     >
                         <img src={foodCategoryImg03} alt="" />
                         Others
@@ -147,7 +146,7 @@ const AllFoods = () => {
                 </Col>
                 <Col lg="6" md="6" sm="6" xs="12" className="mb-5">
                     <div className="sorting__widget text-end">
-                        <select className="w-50" onChange={(e) => { setSortOption(e.target.value.toUpperCase()); }}>
+                        <select className="w-50" onChange={(e) => { handleSortOptionChange(e.target.value.toUpperCase()); }}>
                             <option >Default</option>
                             <option value="high">High Price</option>
                             <option value="low">Low Price</option>
