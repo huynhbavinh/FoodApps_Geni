@@ -27,21 +27,6 @@ const Products = ({items}) => {
     };
     fetch()
   };
-  // useEffect(() => {
-  //   if (user) {
-  //     let total = 0;
-  //     const fetch = async () => {
-  //       const carts = (await axios.get(`http://localhost:8080/api/cart/cart?idUser=${user.data.id}`, {
-  //         'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
-  //       })).data;
-  //       carts.forEach(i => {
-  //         total += parseInt(i.quantity)
-  //       })
-  //       setTotalCart(total);
-  //     }
-  //     fetch();
-  //   }
-  // }, [])
   const actionColumn = [
     {
       field: "action",
