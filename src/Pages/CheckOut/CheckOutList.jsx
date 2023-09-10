@@ -10,8 +10,7 @@ import axios from "axios";
 import { useAuth } from "../../Context/AuthContext.jsx";
 
 const CheckOutList = () => {
-  const [totalMoney, setTotalMoney] = useState(0);
-  const [carts, setCart] = useState(0);
+  const [carts, setCart] = useState([]);
   const { user } = useAuth()
 
   useEffect(() => {
@@ -22,10 +21,6 @@ const CheckOutList = () => {
           'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
         })).data;
         setCart(carts)
-        carts.forEach(i => {
-          total += parseInt(i.quantity) * parseInt(i.food.price);
-        })
-        setTotalMoney(total);
       }
       fetch();
     }
@@ -34,7 +29,7 @@ const CheckOutList = () => {
     <Container fluid>
       <Row>
         <Col xs={6}><Carts items={carts} /></Col>
-        <Col><FormCheckOut /></Col>
+        <Col><FormCheckOut items={carts} /></Col>
       </Row>
     </Container>
   )
