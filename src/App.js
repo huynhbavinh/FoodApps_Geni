@@ -9,7 +9,7 @@ import { ProtectedRoute, AdminProtectedRoute } from './Pages/Layout/ProtectedRou
 import UserProfile from './Pages/Users/UserProfile.jsx';
 import { AuthProvider } from './Context/AuthContext.jsx'
 import AllFood from './Pages/Products/AllFood.jsx';
-import Cart from './Pages/Cart/CartListDetails.jsx';
+import Carts from './Pages/CartList/CartList.jsx';
 import Contact from './Pages/Contact/Contact.jsx';
 import ListProduct from "./Pages/ProductsList/ProductList.jsx";
 import ListUser from "./Pages/Users/UserList.jsx";
@@ -34,7 +34,7 @@ function App() {
           }
           >
             <Route path='/profile' element={<UserProfile />} />
-            <Route path='/cart' element={<Cart />} />
+            <Route path='/cart' element={<Carts />} />
           </Route>
           //
           <Route element={<AppLayout />}>
@@ -43,6 +43,7 @@ function App() {
             <Route path='/menu' element={<SignUp />} />
             <Route path='/foods' element={<AllFood />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path="users/:id" element={<Single />} />
           </Route>
           // admin
           <Route element={
@@ -62,12 +63,12 @@ function App() {
             <Route path="products/:id" element={<SingleProduct />} />
             <Route path="users">
               <Route index element={<ListUser />} />
-              <Route path=":user" element={<Single />} />
               <Route
                 path="adduser"
                 element={<AddProduct inputs={productInputs} title="Add New User" />}
               />
             </Route>  
+            <Route path="users/:id" element={<Single />} />
             <Route path='/category' element={<CategoryList />} />
             <Route path='/rank' element={<RankList />} />
           </Route>

@@ -32,7 +32,7 @@ const initialState = {
 const AuthProvider  = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState)
     let {user, isAuthenticated, error} = state;
-
+    let flags = 0
     async function login (userName, password) {
         try {
             const userLoginInfo = {
@@ -53,10 +53,9 @@ const AuthProvider  = ({children}) => {
     function logout () {
         dispatch({type: 'logout'});
         localStorage.clear()
-        
     }
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout, error}}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout, error }}>
             {children}
         </AuthContext.Provider>
         

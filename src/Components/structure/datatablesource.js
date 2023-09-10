@@ -108,3 +108,60 @@ export const rankColumns = [
     width: 250,
   }
 ];
+export const cartColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "Product",
+    headerName: "Product",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+          <img className="cellImg" src={params.row.food.photos} alt="avatar" />
+          {params.row.food.name}
+        </div>
+      );
+    },
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    width: 300,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.food.description}`}>
+          {params.row.food.description}
+        </div>
+      );
+    },
+  },
+  {
+    field: "price",
+    headerName: "Price",
+    width: 120,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.food.price}`}>
+          {params.row.food.price}
+        </div>
+      );
+    },
+  },
+  {
+    field: "quantity",
+    headerName: "Quantity",
+    width: 80,
+  },
+  {
+    field: "totalPrice",
+    headerName: "Total Price",
+    width: 80,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.food.price * params.row.quantity}`}>
+          {params.row.food.price * params.row.quantity}
+        </div>
+      );
+    },
+  },
+];

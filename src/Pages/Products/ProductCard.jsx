@@ -1,22 +1,37 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useAuth } from "../../Context/AuthContext.jsx"
 import "../../styles/product-card.css"
 
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-import axios  from "axios";
 const ProductCard = (props) => {
-  const {id, name, price, photos} = props.item;
-  const items =JSON.parse(window.localStorage.getItem("user"));
-  // const config = {
-  //   headers: { Authorization: `Bearer ${items.accessToken}` }
-  // };
-  // const addToCart = () => {
-  //   const newItem={idOfCus:items.id,
-  //   idOfPro:id,
-  //   quantity:1}
-  //   axios.post("http://localhost:8080/api/cart/addCart",newItem, config);
-  // };
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  const { user } = useAuth();
+  const { id, name, price, photos } = props.item;
+  const handleAddCart = () => {
+    const newItem = {
+      idOfCus: user.data.id,
+      idOfPro: id,
+      quantity: 1
+    }
+    axios.post("http://localhost:8080/api/cart/addCart", newItem, {
+      'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
+    }).then(() => {
+      setShow(true)
+      if (!localStorage.getItem('cart')) {
+        localStorage.setItem('cart', '0')
+      } else {
+        const numb = parseInt(localStorage.getItem('cart')) + 1;
+        localStorage.setItem('cart', numb.toString())
+      }
+    });
+  };
 
   return (
     <div className="product__item">
@@ -30,11 +45,22 @@ const ProductCard = (props) => {
         </h5>
         <div className=" d-flex align-items-center justify-content-between ">
           <span className="product__price">${price}</span>
-          <button className="addTOCart__btn" onClick={""}>
+          <button className="addTOCart__btn" onClick={() => { handleAddCart() }}>
             Add to Cart
           </button>
         </div>
       </div>
+      {show && <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Successfully</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are adding it to cart!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            OK!
+          </Button>
+        </Modal.Footer>
+      </Modal>}
     </div>
   );
 };

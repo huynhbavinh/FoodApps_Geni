@@ -46,13 +46,16 @@ const HomePage = () => {
     const [category, setCategory] = useState("All");
     const [foods, setFoods] = useState([]);
     const [allProducts, setAllProducts] = useState(foods);
-    const {isAuthenticated} = useAuth()
     useEffect(() => {
         axios.get("http://localhost:8080/auth/showFood").then((data) => {
             setFoods(data.data);
+            if (category === "All") {
+                const top = data.data.slice(0,4);
+                setAllProducts(top);
+            }
         })
         if (category === "All") {
-            setAllProducts(foods);
+            setFoods(foods);
         }
 
         if (category === "Food") {

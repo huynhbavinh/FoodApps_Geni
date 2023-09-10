@@ -10,16 +10,16 @@ const Cart = () => {
 
     const [totalMoney, setTotalMoney] = useState(0);
 
-    const fetchData = async () => {
-        const items = JSON.parse(window.localStorage.getItem("user"));
-        const config = {
-            headers: { Authorization: `Bearer ${items.accessToken}` }
-        };
-        console.log(items.accessToken)
-        await axios.get("http://localhost:8080/api/cart/cart?idUser=" + items.id, config).then((data) => {
-            setListItems(data.data);
-        });
-    }
+    // const fetchData = async () => {
+    //     const items = JSON.parse(window.localStorage.getItem("user"));
+    //     const config = {
+    //         headers: { Authorization: `Bearer ${items.accessToken}` }
+    //     };
+    //     console.log(items.accessToken)
+    //     await axios.get("http://localhost:8080/api/cart/cart?idUser=" + items.id, config).then((data) => {
+    //         setListItems(data.data);
+    //     });
+    // }
     const cartItems = listItems;
     const total = async () => {
         var money = 0;

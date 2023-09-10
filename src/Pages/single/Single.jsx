@@ -1,55 +1,58 @@
 import "./single.scss";
-import Sidebar from "../../Components/sidebar/Sidebar.jsx"
-import Navbar from "../../Components/navbar/Navbar.jsx";
-import Chart from "../../Components/chart/Chart.jsx";
 import List from "../../Components/table/Table.jsx";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Single = () => {
+  const { id } = useParams();
+  const [profile, setProfile] = useState({})
+  useEffect(() => {
+    const fetch = async () => {
+      const users = (await axios.get("http://localhost:8080/api/admin/allUsers")).data;
+      const profile = users.data.find((user) => (user.id == id))
+      setProfile(profile);
+    }
+    fetch();
+  }, [])
   return (
     <div className="single">
-      <Sidebar />
       <div className="singleContainer">
-        <Navbar />
         <div className="top">
           <div className="left">
             <div className="editButton">Edit</div>
             <h1 className="title">Information</h1>
             <div className="item">
               <img
-                src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                src={profile.photos}
                 alt=""
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle">Jane Doe</h1>
+                <h1 className="itemTitle">{profile.name}</h1>
                 <div className="detailItem">
-                  <span className="itemKey">Email:</span>
-                  <span className="itemValue">janedoe@gmail.com</span>
+                  <span className="itemKey">Rank:</span>
+                  <span className="itemValue">{profile.rank?.nameRank}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+1 2345 67 89</span>
+                  <span className="itemValue">{profile.phoneNumber}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Address:</span>
-                  <span className="itemValue">
-                    Elton St. 234 Garden Yd. NewYork
-                  </span>
+                  <span className="itemValue">{profile.address}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">USA</span>
+                  <span className="itemKey">Ngày Sinh:</span>
+                  <span className="itemValue">{profile.dateOfBirth}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div>
         </div>
         <div className="bottom">
-        <h1 className="title">Last Transactions</h1>
-          <List/>
+          <h1 className="title">Last Transactions</h1>
+          <List />
         </div>
       </div>
     </div>
