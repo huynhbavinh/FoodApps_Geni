@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -32,6 +32,7 @@ const initialState = {
 const AuthProvider  = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState)
     let {user, isAuthenticated, error} = state;
+    const [totalCart, setTotalCart] = useState(0);
     let flags = 0
     async function login (userName, password) {
         try {
@@ -55,7 +56,7 @@ const AuthProvider  = ({children}) => {
         localStorage.clear()
     }
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout, error }}>
+        <AuthContext.Provider value={{user, isAuthenticated, login, logout, error, totalCart, setTotalCart }}>
             {children}
         </AuthContext.Provider>
         

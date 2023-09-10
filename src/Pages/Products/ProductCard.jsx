@@ -12,7 +12,7 @@ const ProductCard = (props) => {
 
   const handleClose = () => setShow(false);
 
-  const { user } = useAuth();
+  const { user, setTotalCart } = useAuth();
   const { id, name, price, photos } = props.item;
   const handleAddCart = () => {
     const newItem = {
@@ -29,6 +29,7 @@ const ProductCard = (props) => {
       } else {
         const numb = parseInt(localStorage.getItem('cart')) + 1;
         localStorage.setItem('cart', numb.toString())
+        setTotalCart(numb)
       }
     });
   };

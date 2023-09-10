@@ -28,9 +28,7 @@ const menuItems = [
 
 const Header = () => {
     const navigate = useNavigate()
-
-    const [totalCart, setTotalCart] = useState(0);
-    const { logout, user, isAuthenticated } = useAuth();
+    const { logout, user, isAuthenticated, totalCart, setTotalCart } = useAuth();
     const menuRef = useRef(null);
     const headerRef = useRef(null);
     const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
