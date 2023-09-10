@@ -26,6 +26,7 @@ function SignUp() {
     password: "",
     phoneNumber: "",
   });
+  const [body, setBody] = useState('You must fill all the input');
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -45,7 +46,6 @@ function SignUp() {
     formData.append('image', selectedFile);
     formData.append('nameOfAccount', newUser.username);
     formData.append('password', newUser.password);
-    console.log(formData.data);
     await axios.post(apiURL, formData)
       .then(response => {
         console.log('Sign Up successfully:', response.data);
@@ -54,7 +54,16 @@ function SignUp() {
       .catch(error => {
         console.error('Error Sign Up', error);
         setShowErr(true);
-      });
+        if (error.response?.data.toString() == 'Error: Username is already taken!') 
+        {
+          setBody('Username is already taken!');
+        }
+        else {
+          setBody('You must fill all the input');
+        }
+        
+      }
+      );
   }
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -90,7 +99,7 @@ function SignUp() {
         <Col md="4" className="my-5 px-3 py-3 align-items-center bg-light bg-opacity-75 text-dark rounded shadow-lg">
           {showErr && <Alert
             title={'Error'}
-            body={'Something went wrong!'}
+            body={body}
             show={showErr}
             variant={'danger'}
             setShow={setShowErr} />}

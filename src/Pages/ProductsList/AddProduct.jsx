@@ -16,6 +16,7 @@ const AddProduct = ({ inputs, title }) => {
     Description:"",
     Status:"",
     Price:"",
+    Category:"",
   })
   const handleChange = (e) => {
     
@@ -28,16 +29,14 @@ const AddProduct = ({ inputs, title }) => {
     headers: { Authorization: `Bearer ${user.data.accessToken}` }
   };
   const addMenu = async() => {
-    console.log(newProduct);
     const formData = new FormData();
-    formData.append('Name', newProduct.Product);
+    formData.append('name', newProduct.Product);
     formData.append('description', newProduct.Description);
     formData.append('numberFood', 5);
-    formData.append('id_Category', 1);
+    formData.append('categoryId', newProduct.Category);
     formData.append('image', selectedFile );
     formData.append('price', newProduct.Price);
     formData.append('status', newProduct.Status)
-    console.log(newProduct);
     await axios.post(apiURL, formData, config)
     .then(response => {
       console.log('Product created successfully:', response.data);

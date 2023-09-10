@@ -5,6 +5,8 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import StarsIcon from '@mui/icons-material/Stars';
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext.jsx";
@@ -41,6 +43,18 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span>Products</span>
+            </li>
+          </Link>
+          <Link to="/category" style={{ textDecoration: "none" }}>
+            <li>
+              <FastfoodIcon className="icon" />
+              <span>Food Category</span>
+            </li>
+          </Link>
+          <Link to="/rank" style={{ textDecoration: "none" }}>
+            <li>
+              <StarsIcon className="icon" />
+              <span>Rank</span>
             </li>
           </Link>
           <li>

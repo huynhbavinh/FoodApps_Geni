@@ -20,12 +20,10 @@ const AllFoods = () => {
     useEffect(()=>{
       if(sortOption=="Default"){
         setFoods(foods);
-        console.log(foods);
       }
        if(sortOption=="A-Z"){
          setFoods(foods.sort((a, b) =>(a, b) =>
         a.name > b.name ? 1 : -1));
-       console.log(foods);
        }
       if(sortOption=="Z-A"){
         setFoods(foods.sort((a, b) => a.name > b.name ? -1 : 1));
@@ -50,7 +48,7 @@ const AllFoods = () => {
     const handleSort = () => {
         setSortOption()
     }
-    const productPerPage = 12;
+    const productPerPage = 8;
     const visitedPage = pageNumber * productPerPage;
     const displayPage = searchedProduct.slice(
         visitedPage,

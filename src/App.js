@@ -13,10 +13,14 @@ import Cart from './Pages/Cart/CartListDetails.jsx';
 import Contact from './Pages/Contact/Contact.jsx';
 import ListProduct from "./Pages/ProductsList/ProductList.jsx";
 import ListUser from "./Pages/Users/UserList.jsx";
+import CategoryList from "./Pages/FoodCategory/CategoryList.jsx";
+import RankList from './Pages/Rank/RankList.jsx';
 import AddProduct from './Pages/ProductsList/AddProduct.jsx';
+import SingleProduct from './Pages/ProductsList/SingleProduct.jsx';
 import Single from './Pages/single/Single.jsx';
 import { userInputs } from "./Components/structure/formSource.js"
 import { productInputs } from "./Components/structure/formSource.js"
+
 function App() {
   return (
     <AuthProvider>
@@ -50,20 +54,22 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path="products">
               <Route index element={<ListProduct />} />
-              <Route path=":productId" element={<Single />} />
               <Route
                 path="addproduct"
                 element={<AddProduct inputs={productInputs} title="Add New Product" />}
               />
             </Route>
+            <Route path="products/:id" element={<SingleProduct />} />
             <Route path="users">
               <Route index element={<ListUser />} />
-              <Route path=":productId" element={<Single />} />
+              <Route path=":user" element={<Single />} />
               <Route
                 path="adduser"
-                element={<AddProduct inputs={productInputs} title="Add New Product" />}
+                element={<AddProduct inputs={productInputs} title="Add New User" />}
               />
-            </Route>
+            </Route>  
+            <Route path='/category' element={<CategoryList />} />
+            <Route path='/rank' element={<RankList />} />
           </Route>
           <Route element={<AdminLayout />}>
 

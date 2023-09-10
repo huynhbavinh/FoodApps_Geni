@@ -82,3 +82,29 @@ export const productsColumns = [
     width: 100,
   },
 ];
+export const categoryColumns = [
+  { field: "id_Category", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Category",
+    width: 300,
+  }
+];
+export const rankColumns = [
+  { field: "id_Rank", headerName: "ID", width: 70 },
+  {
+    field: "nameRank",
+    headerName: "Rank",
+    width: 250,
+  },
+  {
+    field: "amountTotal",
+    headerName: "Amount Spent",
+    width: 250,
+  },
+  {
+    field: "rateDiscount",
+    headerName: "Rate Discount",
+    width: 250,
+  }
+];

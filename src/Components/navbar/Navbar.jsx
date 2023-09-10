@@ -7,7 +7,6 @@ import { useAuth } from "../../Context/AuthContext.jsx";
 
 const Navbar = () => {
   const { user } = useAuth();
-  console.log(user);
   return (
     <div className="navbar">
       <div className="wrapper">

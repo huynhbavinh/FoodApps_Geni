@@ -57,21 +57,21 @@ const HomePage = () => {
 
         if (category === "Food") {
             const filteredProducts = foods.filter(
-                (item) => item.category.name === "Food"
+                (item) => item.category?.name === "Food"
             );
 
             setAllProducts(filteredProducts);
         }
         if (category === "Drink") {
             const filteredProducts = foods.filter(
-                (item) => item.category.name === "Drink"
+                (item) => item.category?.name === "Drink"
             );
 
             setAllProducts(filteredProducts);
         }
         if (category === "Others") {
             const filteredProducts = foods.filter(
-                (item) => item.category.name === "Others"
+                (item) => item.category?.name === "Others"
             );
 
             setAllProducts(filteredProducts);

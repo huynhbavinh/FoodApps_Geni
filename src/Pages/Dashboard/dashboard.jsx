@@ -5,12 +5,10 @@ import Widget from "../../Components/widget/Widget.jsx";
 import Featured from "../../Components/featured/Featured.jsx";
 import Chart from "../../Components/chart/Chart.jsx";
 import Table from "../../Components/table/Table.jsx";
-import ProductList from "../ProductsList/ProductList.jsx";
 import { useAuth } from "../../Context/AuthContext.jsx";
 
 const Dashboard = () => {
     const {user} = useAuth();
-    console.log('Token: ', user.data.accessToken)
 return (
 <div className="home">
     <Sidebar />
@@ -20,7 +18,7 @@ return (
         <Widget type="user" />
         <Widget type="order" />
         <Widget type="earning" />
-        <Widget type="balance" />
+        <Widget type="products" />
     </div>
     <div className="charts">
         <Featured />
