@@ -5,10 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Context/AuthContext.jsx";
-import { useCart } from "../../Context/CartContext.jsx";
 const Products = ({items}) => {
   const { user } = useAuth()
-  const {setReRender, reRender} = useCart()
   const handleChangeQuantity = (id, quantity) => {
     const fetch = async () => {
       const newItem = {

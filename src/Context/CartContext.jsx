@@ -4,9 +4,6 @@ import {createContext, useContext, useState} from 'react';
 
 const CartContext = createContext();
 
-
-const initialState = {};
-
 const CartProvider = ({children}) => {
     const [totalMoney, setTotalMoney] = useState(0);
     const [carts, setCart] = useState(0);

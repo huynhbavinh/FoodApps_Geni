@@ -18,7 +18,6 @@ const AllFoods = () => {
     const [foods, setFoods] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState('All');
-    let fullFood;
     useEffect(() => {
         axios.get("http://localhost:8080/auth/showFood").then((data) => {
             setFoods(data.data);
@@ -61,7 +60,7 @@ const AllFoods = () => {
         }
     }
 
-    const handleSortOptionChange = (sortOption) => {
+    const handleSortOptionChange = sortOption => {
         if (sortOption === "HIGH") {
             setFoods(foods.sort((a, b) => a.price - b.price));
         } else if (sortOption === "LOW") {

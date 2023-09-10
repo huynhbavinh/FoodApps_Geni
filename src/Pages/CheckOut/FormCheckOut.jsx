@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
-function FormCheckOut({items}) {
+function FormCheckOut({ items }) {
     let total = 0;
     let rank;
     let discountPercent;
@@ -23,11 +23,15 @@ function FormCheckOut({items}) {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
+            setValidated(true);
+
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            console.log('else')
             event.preventDefault();
             event.stopPropagation();
         }
-
-        setValidated(true);
     };
 
     return (
