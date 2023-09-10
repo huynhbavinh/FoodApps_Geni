@@ -19,7 +19,7 @@ function FormCheckOut() {
     };
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit} className="bg-gray p-3 border rounded">
+        <Form noValidate validated={validated} onSubmit={handleSubmit} className="bg-gray p-3 border-bottom border-dark rounded">
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="validationCustom01">
                     <Form.Label>First name</Form.Label>
