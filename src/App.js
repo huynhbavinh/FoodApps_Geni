@@ -21,10 +21,11 @@ import Single from './Pages/single/Single.jsx';
 import CheckOutList from './Pages/CheckOut/CheckOutList.jsx';
 import { userInputs } from "./Components/structure/formSource.js"
 import { productInputs } from "./Components/structure/formSource.js"
-
+import { CartProvider } from './Context/CartContext.jsx';
 function App() {
   return (
     <AuthProvider>
+      <CartProvider>
       <BrowserRouter>
         <Routes>
           {/*Protected route */}
@@ -82,6 +83,7 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
         </Routes>
       </BrowserRouter>
+      </CartProvider>
     </AuthProvider>
   )
 }
