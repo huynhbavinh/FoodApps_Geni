@@ -1,54 +1,21 @@
-import "./list.scss"
-
-import CheckOut from "./CheckOut.jsx";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import "./Products.scss";
+import { DataGrid } from "@mui/x-data-grid";
+import { checkoutColumns } from "../../Components/structure/datatablesource.js"
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Context/AuthContext.jsx";
-
-const CheckOutPages = () => {
-  const [totalMoney, setTotalMoney] = useState(0);
-  const [carts, setCart] = useState(0);
-  const { user } = useAuth()
-
-  useEffect(() => {
-    if (user) {
-      let total = 0;
-      const fetch = async () => {
-        const carts = (await axios.get(`http://localhost:8080/api/cart/cart?idUser=${user.data.id}`, {
-          'headers': { 'Authorization': `Bearer ${user.data.accessToken}` }
-        })).data;
-        setCart(carts)
-        carts.forEach(i => {
-          total += parseInt(i.quantity) * parseInt(i.food.price);
-        })
-        setTotalMoney(total);
-      }
-      fetch();
-    }
-  }, [])
+const Products = ({items}) => {
   return (
-    <div className="list">
-      <div className="listContainer" >
-        <CheckOut items={carts}/>
-        <div className="mt-4 d-flex justify-content-around">
-          <h6>
-            Subtotal: $
-            <span className="cart__subtotal">{totalMoney}</span>
-          </h6>
-          <p>Taxes and shipping will calculate at checkout</p>
-          <div className="cart__page-btn">
-            <button className="addTOCart__btn me-4">
-              <Link to="/foods">Continue Shopping</Link>
-            </button>
-            <button className="addTOCart__btn">
-              <Link to="/checkout" onClick={setTotalMoney}>Proceed to checkout</Link>
-            </button>
-          </div>
-        </div>
-      </div>
+    <div className="datatable">
+      <DataGrid
+        className="datagrid"
+        rows={items}
+        columns={checkoutColumns}
+        pageSize={6}
+        rowsPerPageOptions={[6]}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default CheckOutPages
+export default Products;
