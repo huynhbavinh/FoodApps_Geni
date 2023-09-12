@@ -6,7 +6,7 @@ const CartContext = createContext();
 
 const CartProvider = ({children}) => {
     const [totalMoney, setTotalMoney] = useState(0);
-    const [carts, setCart] = useState(0);
+    const [carts, setCart] = useState([]);
     const [reRender, setReRender] = useState(false)
     return (
         <CartContext.Provider value={{totalMoney, setTotalMoney, carts, setCart, setReRender, reRender}}>

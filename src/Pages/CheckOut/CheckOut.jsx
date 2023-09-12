@@ -9,7 +9,7 @@ const Products = ({items}) => {
     <div className="datatable">
       <DataGrid
         className="datagrid"
-        rows={items}
+        rows={items.filter(i => i.quantity > 0)}
         columns={checkoutColumns}
         pageSize={6}
         rowsPerPageOptions={[6]}

@@ -37,7 +37,7 @@ const AuthProvider  = ({children}) => {
     async function login (userName, password) {
         try {
             const userLoginInfo = {
-                userName,
+                userName ,
                 password
             };
             const loginInfo = await axios.post('http://localhost:8080/auth/signin', userLoginInfo)

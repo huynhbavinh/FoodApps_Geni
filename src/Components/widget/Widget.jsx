@@ -5,17 +5,25 @@ import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalance
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import axios from "axios";
+import { useAuth } from "../../Context/AuthContext.jsx";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 const userApiURL ='http://localhost:8080/api/admin/allUsers';
 const Widget = ({ type }) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [apiData, setApiData] = useState([]);
   const [userNum, setUserNum] = useState([0]);
   const [orderNum, setOrderNum] = useState([0]);
   const [earningNum, setEarningNum] = useState([0]);
   const [productsNum, setProductNum] = useState([0]);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.data.accessToken}`,
+      "Access-Control-Allow-Origin": "*",
+    }
+  };
   useEffect(() => {
     axios.get("http://localhost:8080/api/admin/allUsers").then((res)=>{
         setUserNum(res.data.data.length);
@@ -29,6 +37,10 @@ const Widget = ({ type }) => {
     });
     axios.get("http://localhost:8080/auth/showFood").then((res)=>{
         setProductNum(res.data.length);
+    });
+    axios.get("http://localhost:8080/api/admin/allOrders", config ).then((res)=>{
+        setOrderNum(res.data.data.length);
+        console.log(orderNum);
     });
 
   },[]

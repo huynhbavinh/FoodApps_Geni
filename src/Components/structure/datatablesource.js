@@ -18,18 +18,23 @@ export const usersColumns = [
     field: "username",
     headerName: "Username",
     width: 120,
-    
+
   },
   {
     field: "address",
-    headerName: "address",
-    width: 300,
+    headerName: "Address",
+    width: 200,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 200,
   },
   {
     field: "phoneNumber",
     headerName: "Phone Number",
     width: 120,
-    
+
   },
   {
     field: "authorities.authority",
@@ -60,9 +65,10 @@ export const productsColumns = [
     width: 300,
   },
   {
-    field: "type",
-    headerName: "Type",
+    field: "category.name_category",
+    headerName: "Category",
     width: 80,
+    valueGetter: ({ row }) => row.category.name_category
   },
   {
     field: "status",
@@ -85,7 +91,7 @@ export const productsColumns = [
 export const categoryColumns = [
   { field: "id_Category", headerName: "ID", width: 70 },
   {
-    field: "name",
+    field: "name_category",
     headerName: "Category",
     width: 300,
   }
@@ -109,7 +115,6 @@ export const rankColumns = [
   }
 ];
 export const cartColumns = [
-  { field: "id", headerName: "ID", width: 70 },
   {
     field: "Product",
     headerName: "Product",
@@ -166,7 +171,6 @@ export const cartColumns = [
   },
 ];
 export const checkoutColumns = [
-  { field: "id", headerName: "ID", width: 70 },
   {
     field: "Product",
     headerName: "Product",
@@ -208,5 +212,49 @@ export const checkoutColumns = [
         </div>
       );
     },
+  },
+];
+export const reportColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "Product",
+    headerName: "Product",
+    width: 230,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+          <img className="cellImg" src={params.row.photos} alt="avatar" />
+          {params.row.name}
+        </div>
+      );
+    },
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    width: 300,
+  },
+  {
+    field: "category.name_category",
+    headerName: "Category",
+    width: 80,
+    valueGetter: ({ row }) => row.category.name_category
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 120,
+    renderCell: (params) => {
+      return (
+        <div className={`cellWithStatus ${params.row.status}`}>
+          {params.row.status}
+        </div>
+      );
+    },
+  },
+  {
+    field: "price",
+    headerName: "Price",
+    width: 100,
   },
 ];

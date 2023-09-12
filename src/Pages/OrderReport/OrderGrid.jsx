@@ -1,10 +1,10 @@
-import "./Products.scss";
+import "./OrderGrid.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { productsColumns } from "../../Components/structure/datatablesource.js"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const Products = () => {
+const OrderGrid = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const handleDelete = (id) => {
@@ -61,4 +61,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default OrderGrid;

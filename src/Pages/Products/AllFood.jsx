@@ -36,21 +36,21 @@ const AllFoods = () => {
                 break;
             case 'Food':
                 filteredProducts = jsonFoodData.filter(
-                    (item) => item.category?.name === "Food"
+                    (item) => item.category?.name_category === "Food"
                 );
                 setFoods(filteredProducts);
                 setSelectedCategory('Food')
                 break;
             case 'Drink':
                 filteredProducts = jsonFoodData.filter(
-                    (item) => item.category?.name === "Drink"
+                    (item) => item.category?.name_category === "Drink"
                 );
                 setFoods(filteredProducts);
                 setSelectedCategory('Drink')
                 break;
-            case 'Others':
+            case 'Other':
                 filteredProducts = jsonFoodData.filter(
-                    (item) => item.category?.name === "Others"
+                    (item) => item.category?.name_category === "Others"
                 );
                 setFoods(filteredProducts);
                 setSelectedCategory('Others')
@@ -129,7 +129,7 @@ const AllFoods = () => {
                         onClick={() => handleChangeCategory("Others")}
                     >
                         <img src={foodCategoryImg03} alt="" />
-                        Others
+                        Other
                     </button>
                 </div>
             </Col>

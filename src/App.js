@@ -23,6 +23,7 @@ import { userInputs } from "./Components/structure/formSource.js"
 import { productInputs } from "./Components/structure/formSource.js"
 import { CartProvider } from './Context/CartContext.jsx';
 import History from './Pages/History/index.jsx'
+import OrderReport from './Pages/OrderReport/OrderLayout.jsx'
 function App() {
   return (
     <AuthProvider>
@@ -38,6 +39,9 @@ function App() {
           >
             <Route path='/profile' element={<UserProfile />} />
             <Route path='/cart' element={<Carts />} />
+            <Route path="users/:id" element={<Single />} />
+            <Route path="/checkout" element={<CheckOutList />} />
+            <Route path="/history" element={<History />} />
           </Route>
           //
           <Route element={<AppLayout />}>
@@ -46,9 +50,6 @@ function App() {
             <Route path='/menu' element={<SignUp />} />
             <Route path='/foods' element={<AllFood />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path="users/:id" element={<Single />} />
-            <Route path="/checkout" element={<CheckOutList />} />
-            <Route path="/history" element={<History />} />
           </Route>
           // admin
           <Route element={
@@ -76,6 +77,7 @@ function App() {
             <Route path="users/:id" element={<Single />} />
             <Route path='/category' element={<CategoryList />} />
             <Route path='/rank' element={<RankList />} />
+            <Route path='/orders' element={<OrderReport />} />
           </Route>
           <Route element={<AdminLayout />}>
 

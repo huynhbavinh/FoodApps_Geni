@@ -60,21 +60,21 @@ const HomePage = () => {
 
         if (category === "Food") {
             const filteredProducts = foods.filter(
-                (item) => item.category?.name === "Food"
+                (item) => item.category?.name_category === "Food"
             );
 
             setAllProducts(filteredProducts);
         }
         if (category === "Drink") {
             const filteredProducts = foods.filter(
-                (item) => item.category?.name === "Drink"
+                (item) => item.category?.name_category === "Drink"
             );
 
             setAllProducts(filteredProducts);
         }
-        if (category === "Others") {
+        if (category === "Other") {
             const filteredProducts = foods.filter(
-                (item) => item.category?.name === "Others"
+                (item) => item.category?.name_category === "Other"
             );
 
             setAllProducts(filteredProducts);
@@ -214,12 +214,12 @@ const HomePage = () => {
                                 </button>
 
                                 <button
-                                    className={`d-flex align-items-center gap-2 ${category === "Others" ? "foodBtnActive" : ""
+                                    className={`d-flex align-items-center gap-2 ${category === "Other" ? "foodBtnActive" : ""
                                         } `}
-                                    onClick={() => setCategory("Others")}
+                                    onClick={() => setCategory("Other")}
                                 >
                                     <img src={foodCategoryImg03} alt="" />
-                                    Others
+                                    Other
                                 </button>
                             </div>
                         </Col>

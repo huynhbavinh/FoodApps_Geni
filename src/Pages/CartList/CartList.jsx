@@ -9,7 +9,7 @@ import { useCart } from "../../Context/CartContext.jsx";
 
 const ListProduct = () => {
   const { user } = useAuth()
-  const {totalMoney, carts, setCart } = useCart()
+  const { carts, setCart } = useCart()
   useEffect(() => {
     if (user) {
       let total = 0;
@@ -28,20 +28,16 @@ const ListProduct = () => {
   return (
     <div className="list">
       <div className="listContainer" >
-        <Carts items={carts}/>
+        <Carts items={carts} setItems={setCart} />
         <div className="mt-4 d-flex justify-content-around">
-          <h6>
-            Subtotal: $
-            <span className="cart__subtotal">{totalMoney}</span>
-          </h6>
           <p>Taxes and shipping will calculate at checkout</p>
           <div className="cart__page-btn">
             <button className="addTOCart__btn me-4">
               <Link to="/foods">Continue Shopping</Link>
             </button>
-            <button className="addTOCart__btn">
+            {carts.length !== 0 && <button className="addTOCart__btn">
               <Link to="/checkout">Proceed to checkout</Link>
-            </button>
+            </button>}
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@
     },
     {
       id: 2,
-      label: "Product",
+      label: "Name",
       type: "text",
       placeholder: "",
     },
@@ -40,19 +40,6 @@
     {
       id: 2,
       label: "Description",
-      type: "text",
-      placeholder: "",
-    },
-    {
-      id: 3,
-      label: "Category",
-      type: "text",
-      placeholder: "",
-    },
-    
-    {
-      id: 4,
-      label: "Status",
       type: "text",
       placeholder: "",
     },

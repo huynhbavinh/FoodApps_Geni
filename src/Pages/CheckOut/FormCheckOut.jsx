@@ -36,12 +36,18 @@ function FormCheckOut({ items }) {
             event.stopPropagation();
 
             const fetch = async () => {
+                items = items.filter(i => i.quantity);
                 const transformItem = items.map(i => ({
                     id: i.id,
                     ...i.food,
                 }))
                 transformItem.forEach(i=> {
                     delete i['hibernateLazyInitializer'];
+                })
+                transformItem.forEach((i, index) => {
+                    if (i.quantity === 0) {
+                        delete transformItem[index]
+                    }
                 })
                 const order = {
                     "listItemsOr": [...transformItem],

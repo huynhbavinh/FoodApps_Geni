@@ -4,66 +4,89 @@ import Sidebar from "../../Components/sidebar/Sidebar.jsx";
 import Navbar from "../../Components/navbar/Navbar.jsx";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext.jsx";
 import axios from "axios";
-const apiURL = 'http://localhost:8080/api/product/addFood'
-
+import Form from 'react-bootstrap/Form';
+const apiEdit = 'http://localhost:8080/api/product/EditFood'
 const SingleProduct = () => {
+  const navigate = useNavigate();
   let item
   const [singleProduct, setSingleProduct] = useState({});
   const [name, setName] = useState('');
-  const [status, setStatus] = useState('');
+  const [dataStat, setDataStat] = useState(['AVAILABLE']);
   const [des, setDes] = useState('');
   const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
+  const [img, setImg] = useState('');
+  const [idFood, setIdFood] = useState('');
   const { id } = useParams();
+
+  const [dataCate, setDataCate] = useState([]);
+  const [cateChange, setCateChange] = useState('');
+  console.log(singleProduct)
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/category/allCategory', {
+      headers: { Authorization: `Bearer ${user.data.accessToken}` }
+    }).then((res) => {
+      setDataCate(res.data.data);
+    })
+  }, []);
+
   useEffect(() => {
     axios.get("http://localhost:8080/auth/showFood").then((data) => {
       item = data.data.find(item => item.id == id);
       setSingleProduct(item);
-      console.log(item);
     }).then(() => {
       setName(item.name)
-      setStatus(item.status)
+      setDataStat(item.status)
       setDes(item.description)
-      setCategory(item.category.name)
+      setCateChange(item.category.id_Category)
       setPrice(item.price)
+      setImg(item.photos)
+      setIdFood(item.id)
     })
   }, []
   );
   const title = 'Create new product'
   const inputs = productInputs;
   const { user } = useAuth();
-  const [newProduct, setNewProduct] = useState({
-    Product: "",
-    Type: '',
-    Description: "",
-    Status: "",
-    Price: "",
-  })
+
   const handleChange = (value, setter) => {
     setter(value);
   };
   const config = {
     headers: { Authorization: `Bearer ${user.data.accessToken}` }
   };
-  const addMenu = async () => {
+  const editMenu = async () => {
     const formData = new FormData();
-    formData.append('Name', newProduct.Product);
-    formData.append('description', newProduct.Description);
+    const file = await getImageFileFromUrl(img)
+
+    formData.append('idFood', idFood);
+    formData.append('name', name);
+    formData.append('description', des);
     formData.append('numberFood', 5);
-    formData.append('id_Category', 1);
-    formData.append('image', selectedFile);
-    formData.append('price', newProduct.Price);
-    formData.append('status', newProduct.Status)
-    await axios.post(apiURL, formData, config)
+    formData.append('categoryId', cateChange);
+    formData.append('image', selectedFile ?? file);
+    formData.append('price', price);
+    formData.append('status', dataStat)
+    await axios.post(apiEdit, formData, config)
       .then(response => {
-        console.log('Product created successfully:', response.data);
+        console.log('Product edited successfully:', response.data);
+        navigate('/products');
       })
       .catch(error => {
-        console.error('Error creating product:', error);
+        console.error('Error edit product:', error);
       });
+  }
+
+  const getImageFileFromUrl = async (url) => {
+    const temp = url.split('/');
+    const fileName = temp[temp.length - 1]
+    let response = (await axios.get(url, config)).data;
+    let metadata = {
+      type: "image/jpeg"
+    };
+    return new File([response], fileName, metadata);
   }
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState()
@@ -119,39 +142,57 @@ const SingleProduct = () => {
               </div>
               <div className="formInput" key='1'>
                 <label>Product</label>
-                <input name='Product' value={name} autoComplete="off" type="text" onChange={(e)=> {
+                <input name='Product' value={name} autoComplete="off" type="text" onChange={(e) => {
                   handleChange(e.target.value, setName)
                 }} />
               </div>
               <div className="formInput" key='2'>
                 <label>Description</label>
-                <input name='Description' value={des} autoComplete="off" type="text" onChange={(e)=> {
+                <input name='Description' value={des} autoComplete="off" type="text" onChange={(e) => {
                   handleChange(e.target.value, setDes)
                 }} />
               </div>
-              <div className="formInput" key='3'>
-                <label>Category</label>
-                 {/* <input name='Category' value={singleProduct.category?.name || 'None Category'} */}
-                <input name='Category' value={category || 'None Category'} 
-                autoComplete="off" type="text" onChange={(e)=> {
-                  handleChange(e.target.value, setCategory) 
-                }}  />
+              <div className="formInput" key={'3'}>
+                <label>Price</label>
+                <input name='Price' value={price} autoComplete="off" type="number" onChange={(e) => {
+                  handleChange(e.target.value, setPrice)
+                }} />
               </div>
-              <div className="formInput" key={'4'}>
+              <div className="bottom d-block">
+              <div className="d-flex justify-content-between align-items-center" style={{width: '700px'}}>
+                <p className="m-0">Category:</p>
+                <Form.Select style={{'margin-right': '99px'}} onChange={(e) => { setCateChange(e.target.value) }} aria-label="Default select example">
+                  {dataCate.map(i => <option value={i.id_Category}>{i.name_category}</option>)}
+                </Form.Select>
+
+                <p className="m-0">Status:</p>
+                <Form.Select onChange={(e) => { setDataStat(e.target.value) }} aria-label="Default select example">
+                  <option value="AVAILABLE">AVAILABLE</option>
+                  <option value="DISABLE">DISABLE</option>
+                </Form.Select>
+              </div>
+            </div>
+            <div>
+              <button type="button" style={{ margin: '5px' }} onClick={ () => {navigate('/products')}}>Cancel</button>
+              <button type="button" onClick={editMenu}>Edit</button>
+            </div>
+               {/*
+               <div className="formInput" key={'4'}>
                 <label>Status</label>
-                <input name='Status' value={status} autoComplete="off" type="text" onChange={(e)=> {
+                <input name='Status' value={status} autoComplete="off" type="text" onChange={(e) => {
                   handleChange(e.target.value, setStatus)
                 }} />
               </div>
-              <div className="formInput" key={'5'}>
-                <label>Price</label>
-                <input name='Price' value={price} autoComplete="off" type="number" onChange={(e)=> {
-                  handleChange(e.target.value, setPrice) 
-                }} />
+              <div>
+                <select onChange={(e) => { setCateChange(e.target.value) }}>
+                  {dataCate.map(i => <option value={i.id_Category} selected={cateChange === i.id_Category}>{i.name_category}</option>)}
+                </select>
               </div>
-              <Link to="" style={{ textDecoration: "none" }}><button type="button">Cancel</button></Link>
-              <Link to="" style={{ textDecoration: "none" }}><button type="button" onClick={addMenu}>Create</button></Link>
-
+              <div>
+                <button type="button" style={{margin: '5px'}}  onClick={ () => {navigate('/products')}}>Cancel</button>
+                <button type="button" onClick={editMenu}>Edit</button>
+              </div>
+              */}
             </form>
           </div>
         </div>
